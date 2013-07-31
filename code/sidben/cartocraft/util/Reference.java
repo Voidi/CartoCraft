@@ -17,7 +17,7 @@ public class Reference {
 
     public static final String  ResourcesNamespace = Reference.ModID;
 
-    public static final String  ServerProxyClass   = "sidben.cartocraft.CommonProxy";
-    public static final String  ClientProxyClass   = "sidben.cartocraft.ClientProxy";
+    public static final String  ServerProxyClass   = "sidben.cartocraft.common.CommonProxy";
+    public static final String  ClientProxyClass   = "sidben.cartocraft.client.ClientProxy";
 
 }
