@@ -1,0 +1,21 @@
+[
+{
+"modid": "cartocraft",
+"name": "CartoCraft",
+"description": "Allows you to edit maps (map item) and add custom icons.",
+"version": "0.1 Alpha",
+"mcversion": "1.6.2",
+"url": "http://sidbenmc.wordpress.com/",
+"updateUrl": "",
+"authors": [ "sidben" ],
+"credits": "",
+"logoFile": "",
+"screenshots": [ ],
+"parent": "",
+"requiredMods": [ "Forge" ],
+"dependencies": [ ],
+"dependants": [ ],
+"useDependencyInformation": "true"
+}
+]
+
