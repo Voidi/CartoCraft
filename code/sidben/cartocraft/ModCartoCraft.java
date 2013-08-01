@@ -26,7 +26,7 @@ public class ModCartoCraft {
 
     // Says where the client and server 'proxy' code is loaded.
     @SidedProxy(clientSide = Reference.ClientProxyClass, serverSide = Reference.ServerProxyClass)
-    public static CommonProxy       proxy;
+    public static CommonProxy   proxy;
 
 
     @Mod.EventHandler
