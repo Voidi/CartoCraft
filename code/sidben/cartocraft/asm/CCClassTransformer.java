@@ -45,7 +45,8 @@ public class CCClassTransformer implements IClassTransformer {
         // Check if the JVM is about to process the avs.class or the MapItemRenderer.class
         if (arg0.equals("avs") || arg0.equals("net.minecraft.client.gui.MapItemRenderer")) {
             System.out.println("********* INSIDE MAPITEMRENDERER TRANSFORMER ABOUT TO PATCH: " + arg0);
-            arg2 = this.patchClassInJar(arg0, arg2, arg0, CCFMLLoadingPlugin.location);
+            // arg2 = this.patchClassInJar(arg0, arg2, arg0, CCFMLLoadingPlugin.location);
+            // Disabled until I finish the class
         }
 
         return arg2;
