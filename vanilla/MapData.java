@@ -239,6 +239,18 @@ public class MapData extends WorldSavedData
         byte b2 = 63;
         byte b3;
 
+
+        System.out.println("MapData.func_82567_a()");
+        System.out.println("    Map center: " + this.xCenter + ", " + this.zCenter + ", scale " + this.scale);
+        System.out.println("    Original: " + par4 + ", " + par6);
+        System.out.println("    j: " + j);
+        System.out.println("    f: " + f);
+        System.out.println("    f1: " + f1);
+        System.out.println("    b0: " + b0);
+        System.out.println("    b1: " + b1);
+
+        
+        
         if (f >= (float)(-b2) && f1 >= (float)(-b2) && f <= (float)b2 && f1 <= (float)b2)
         {
             par8 += par8 < 0.0D ? -8.0D : 8.0D;
@@ -290,6 +302,10 @@ System.out.println("    playersVisibleOnMap.put | Size: " + par1 +  " - x: " + b
 */
 
 
+        System.out.println("    b0 (2): " + b0);
+        System.out.println("    b1 (2): " + b1);
+
+        
         this.playersVisibleOnMap.put(par3Str, new MapCoord(this, (byte)par1, b0, b1, b3));
     }
 
@@ -457,7 +473,20 @@ System.out.println("    playersVisibleOnMap.put | Size: " + par1 +  " - x: " + b
     
     
     
-    public void addCustomIcon(byte iconNum, byte x, byte z) {
+    public void addCustomIcon(byte iconNum, int worldX, int worldZ) {
+        System.out.println("MapData.addCustomIcon(" + iconNum + ", " + worldX + ", " + worldZ + ")");
+
+        // Calculates the position of the icon on this particular map
+        int fator = 1 << this.scale;
+        float xFromCenter = (float)(worldX - (double)this.xCenter) / (float)fator;
+        float zFromCenter = (float)(worldZ - (double)this.zCenter) / (float)fator;
+        byte x = (byte)((int)((double)(xFromCenter * 2.0F) + 0.5D));
+        byte z = (byte)((int)((double)(zFromCenter * 2.0F) + 0.5D));
+        
+        
+        System.out.println("    Final coords: " + x + ", " + z);
+
+        
         String iconKey = getCustomIconKey(x, z);
         
         // Remove old icon (if found one)

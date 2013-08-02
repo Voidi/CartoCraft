@@ -69,10 +69,11 @@ public class PlayerEventHandler {
                     if (targetBlockID == Block.brick.blockID) {
                         System.out.println("---------------------------------------------------");
                         System.out.println("Valid");
+                        System.out.println("X: " + event.x + " (byte: " + (byte)event.x + "), Z: " +event.z+ " (byte: " +(byte)event.z+ ")");
                         System.out.println("---------------------------------------------------");
                         
                         MapData mapdata = ((ItemMap)usedItem.getItem()).getMapData(usedItem, event.entityPlayer.worldObj);
-                        mapdata.addCustomIcon((byte)3, (byte)event.x, (byte)event.z);
+                        mapdata.addCustomIcon((byte)3, event.x, event.z);
                         
                     }
 

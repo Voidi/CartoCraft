@@ -22,6 +22,11 @@ public class MapItemRenderer
     private int[] intArray = new int[16384];
     private GameSettings gameSettings;
     private final ResourceLocation field_111276_e;
+    
+    
+    // CartoCraft - loads my mod texture inside vanilla :D
+    private static final ResourceLocation ccMapIcons = new ResourceLocation("cartocraft", "textures/map/custom_map_icons.png");
+    
 
     public MapItemRenderer(GameSettings par1GameSettings, TextureManager par2TextureManager)
     {
@@ -100,30 +105,38 @@ public class MapItemRenderer
         tessellator.draw();
         */
 
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
-        GL11.glDisable(GL11.GL_BLEND);
-        par2TextureManager.func_110577_a(field_111277_a);
         int k1 = 0;
 
         
         // CartoCraft
-        // System.out.println("MapItemRenderer.renderMap()");
-        // System.out.println("    Icons: " + par3MapData.customIcons.size());
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        GL11.glDisable(GL11.GL_BLEND);
+        par2TextureManager.func_110577_a(ccMapIcons);
 
         k1 = 0;
         for (Iterator iterator = par3MapData.customIcons.values().iterator(); iterator.hasNext(); ++k1)
         {
             MapCoord mapcoord = (MapCoord)iterator.next();
+            float iconSize = 8.0F;      // Default vanilla = 4, using a 8x8 icon
+            int iconsPerRow = 4;
+            
+            //mapcoord.iconSize = 3;
             
             GL11.glPushMatrix();
             GL11.glTranslatef((float)b1 + (float)mapcoord.centerX / 2.0F + 64.0F, (float)b2 + (float)mapcoord.centerZ / 2.0F + 64.0F, -0.02F);
-            GL11.glRotatef((float)(mapcoord.iconRotation * 360) / 16.0F, 0.0F, 0.0F, 1.0F);
-            GL11.glScalef(4.0F, 4.0F, 3.0F);
+            GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+            GL11.glScalef(iconSize, iconSize, 3.0F);
             GL11.glTranslatef(-0.125F, 0.125F, 0.0F);
-            float f1 = (float)(mapcoord.iconSize % 4 + 0) / 4.0F;
-            float f2 = (float)(mapcoord.iconSize / 4 + 0) / 4.0F;
-            float f3 = (float)(mapcoord.iconSize % 4 + 1) / 4.0F;
-            float f4 = (float)(mapcoord.iconSize / 4 + 1) / 4.0F;
+            float f1 = (float)(mapcoord.iconSize % iconsPerRow + 0) / iconsPerRow;       // X start
+            float f2 = (float)(mapcoord.iconSize / iconsPerRow + 0) / iconsPerRow;       // Y start
+            float f3 = (float)(mapcoord.iconSize % iconsPerRow + 1) / iconsPerRow;       // X end
+            float f4 = (float)(mapcoord.iconSize / iconsPerRow + 1) / iconsPerRow;       // Y end
+            
+            
+            //System.out.println("Map icons test: " + mapcoord.iconSize + " | " + f1 + " | " + f2 + " | " + f3 + " | " + f4);
+            System.out.println("C Map icons pos: " + mapcoord.iconSize + " | " + mapcoord.centerX + " | " + mapcoord.centerZ);
+            
+            
             tessellator.startDrawingQuads();
             tessellator.addVertexWithUV(-1.0D, 1.0D, (double)(0.001D), (double)f1, (double)f2);
             tessellator.addVertexWithUV(1.0D, 1.0D, (double)(0.001D), (double)f3, (double)f2);
@@ -134,10 +147,22 @@ public class MapItemRenderer
         }
         
 
+
+        // Vanilla
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        GL11.glDisable(GL11.GL_BLEND);
+        par2TextureManager.func_110577_a(field_111277_a);
+
         k1 = 0;
         for (Iterator iterator = par3MapData.playersVisibleOnMap.values().iterator(); iterator.hasNext(); ++k1)
         {
             MapCoord mapcoord = (MapCoord)iterator.next();
+            
+            
+            //System.out.println("Map icons test: " + mapcoord.iconSize + " | " + mapcoord.iconRotation + " | " + ((float)(mapcoord.iconRotation * 360) / 16.0F));
+            System.out.println("V Map icons pos: " + mapcoord.iconSize + " | " + mapcoord.centerX + " | " + mapcoord.centerZ);
+            
+            
             GL11.glPushMatrix();
             GL11.glTranslatef((float)b1 + (float)mapcoord.centerX / 2.0F + 64.0F, (float)b2 + (float)mapcoord.centerZ / 2.0F + 64.0F, -0.02F);
             GL11.glRotatef((float)(mapcoord.iconRotation * 360) / 16.0F, 0.0F, 0.0F, 1.0F);
