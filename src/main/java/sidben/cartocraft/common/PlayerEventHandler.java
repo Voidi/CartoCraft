@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.storage.MapData;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
@@ -20,6 +19,10 @@ public final class PlayerEventHandler {
 
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
+        if (event.entityPlayer == null || event.world == null || event.isCanceled()) {
+            return;
+        }
+
         // Only runs on the server
         if (WorldHelper.isServer(event.world)) {
             // When a player shift and right-clicks a block.
@@ -73,7 +76,7 @@ public final class PlayerEventHandler {
                         targetIcon = 43;
                     }
                     // --- End Portal
-                    if (targetBlock == Blocks.end_portal || targetBlock == Blocks.end_portal_frame) {
+                    if (targetBlock == Blocks.end_portal | targetBlock == Blocks.end_portal_frame) {
                         targetIcon = 44;
                     }
                     // --- Brewing Stand
@@ -81,11 +84,11 @@ public final class PlayerEventHandler {
                         targetIcon = 45;
                     }
                     // --- Enchantment Table, Bookshelf
-                    if (targetBlock == Blocks.enchanting_table || targetBlock == Blocks.bookshelf) {
+                    if (targetBlock == Blocks.enchanting_table | targetBlock == Blocks.bookshelf) {
                         targetIcon = 46;
                     }
                     // --- Note Block, Jukebox
-                    if (targetBlock == Blocks.noteblock || targetBlock == Blocks.jukebox) {
+                    if (targetBlock == Blocks.noteblock | targetBlock == Blocks.jukebox) {
                         targetIcon = 47;
                     }
                     // --- Anvil
@@ -94,9 +97,7 @@ public final class PlayerEventHandler {
                     }
 
                     if (targetIcon > -1) {
-                        MapData mapdata = ((ItemMap)usedItem.getItem()).getMapData(usedItem, event.entityPlayer.worldObj);
-//                        mapdata.addCustomIcon(targetIcon, event.x, event.z);
-                        //TODO
+                        MapHelper.addCustomIcon(((ItemMap)usedItem.getItem()).getMapData(usedItem, event.world), targetIcon, event.x, event.z);
                     }
                 }
             }

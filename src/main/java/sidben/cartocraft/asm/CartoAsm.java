@@ -2,6 +2,7 @@ package sidben.cartocraft.asm;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.*;
+import sidben.cartocraft.asm.transformers.MapDataTransformer;
 
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public final class CartoAsm implements IFMLLoadingPlugin {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[0];
+        return new String[] { MapDataTransformer.class.getCanonicalName() };
     }
 
     @Override
