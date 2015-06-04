@@ -1,19 +1,18 @@
 package sidben.cartocraft.client;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemMap;
-import net.minecraft.item.ItemStack;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.*;
 import net.minecraft.world.storage.MapData;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 public class PlayerEventHandler {
 
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
         // Only runs on the server
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
@@ -21,17 +20,16 @@ public class PlayerEventHandler {
             if (event.action == Action.RIGHT_CLICK_BLOCK) {
                 // Get what the player used and what he or she clicked.
                 ItemStack usedItem = event.entityPlayer.getCurrentEquippedItem();
-                int targetBlockID = event.entityPlayer.worldObj.getBlockId(event.x, event.y, event.z);
+                Block targetBlock = event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z);
                 int targetMeta = event.entityPlayer.worldObj.getBlockMetadata(event.x, event.y, event.z);
                 // Check if the player right-clicked with a map in hand.
                 // Process only valid blocks
-                if (usedItem != null && usedItem.itemID == Item.map.itemID) {
-                    
+                if (usedItem != null && usedItem.getItem() instanceof ItemMap) {
                     // Defines the custom icon based on the block clicked
                     byte targetIcon = -1;
-                    
+
                     // --- Wool
-                    if (targetBlockID == Block.cloth.blockID) {
+                    if (targetBlock == Blocks.wool) {
                         switch (targetMeta) {
                         case 0: targetIcon = 14; break;        // White
                         case 1: targetIcon = 9; break;         // Orange
@@ -53,52 +51,53 @@ public class PlayerEventHandler {
                     }
 
                     // --- Mob Spawner
-                    else if (targetBlockID == Block.mobSpawner.blockID) {
+                    else if (targetBlock == Blocks.mob_spawner) {
                         targetIcon = 40;
                     }
 
                     // --- Beacon
-                    else if (targetBlockID == Block.beacon.blockID) {
+                    else if (targetBlock == Blocks.beacon) {
                         targetIcon = 41;
                     }
-                    
+
                     // --- Chest, Trapped Chest, Ender Chest
-                    else if (targetBlockID == Block.chest.blockID || targetBlockID == Block.chestTrapped.blockID || targetBlockID == Block.enderChest.blockID) {
+                    else if (targetBlock == Blocks.chest || targetBlock == Blocks.trapped_chest || targetBlock == Blocks.ender_chest) {
                         targetIcon = 42;
                     }
 
                     // --- Nether Portal
-                    else if (targetBlockID == Block.portal.blockID) {
+                    else if (targetBlock == Blocks.portal) {
                         targetIcon = 43;
                     }
-                    
+
                     // --- End Portal
-                    else if (targetBlockID == Block.endPortal.blockID || targetBlockID == Block.endPortalFrame.blockID) {
+                    else if (targetBlock == Blocks.end_portal || targetBlock == Blocks.end_portal_frame) {
                         targetIcon = 44;
                     }
-                    
+
                     // --- Brewing Stand
-                    else if (targetBlockID == Block.brewingStand.blockID) {
+                    else if (targetBlock == Blocks.brewing_stand) {
                         targetIcon = 45;
                     }
-                    
+
                     // --- Enchantment Table, Bookshelf
-                    else if (targetBlockID == Block.enchantmentTable.blockID || targetBlockID == Block.bookShelf.blockID) {
+                    else if (targetBlock == Blocks.enchanting_table || targetBlock == Blocks.bookshelf) {
                         targetIcon = 46;
                     }
-                    
+
                     // --- Note Block, Jukebox
-                    else if (targetBlockID == Block.music.blockID || targetBlockID == Block.jukebox.blockID) {
+                    else if (targetBlock == Blocks.noteblock || targetBlock == Blocks.jukebox) {
                         targetIcon = 47;
                     }
-                    
+
                     // --- Anvil
-                    else if (targetBlockID == Block.anvil.blockID) {
+                    else if (targetBlock == Blocks.anvil) {
                         targetIcon = 52;
                     }
                     if (targetIcon > -1) {
                         MapData mapdata = ((ItemMap)usedItem.getItem()).getMapData(usedItem, event.entityPlayer.worldObj);
-                        mapdata.addCustomIcon(targetIcon, event.x, event.z);
+//                        mapdata.addCustomIcon(targetIcon, event.x, event.z);
+                        //TODO
                     }
                 }
             }

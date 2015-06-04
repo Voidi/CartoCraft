@@ -1,19 +1,18 @@
 package sidben.cartocraft;
 
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
 import sidben.cartocraft.client.PlayerEventHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
 
 @Mod(modid = CartoCraft.CARTO_CRAFT_MOD_ID, name = CartoCraft.CARTO_CRAFT_NAME, version = CartoCraft.CARTO_CRAFT_VERSION)
 public class CartoCraft {
 
 	public static final String CARTO_CRAFT_MOD_ID = "CartoCraft", CARTO_CRAFT_NAME = "Carto Craft", CARTO_CRAFT_VERSION = "@VERSION@";
 
-    @Instance(Reference.ModID)
+    @Instance(CartoCraft.CARTO_CRAFT_MOD_ID)
     public static CartoCraft instance;
 
     @EventHandler
