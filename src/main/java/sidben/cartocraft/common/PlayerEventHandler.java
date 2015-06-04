@@ -1,30 +1,36 @@
-package sidben.cartocraft.client;
+package sidben.cartocraft.common;
 
-import cpw.mods.fml.common.FMLCommonHandler;
+import corelibrary.helpers.PlayerHelper;
+import corelibrary.helpers.WorldHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemMap;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.MapData;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
-public class PlayerEventHandler {
+public final class PlayerEventHandler {
+
+    public static final Object INSTANCE = new PlayerEventHandler();
+
+    private PlayerEventHandler() {
+    }
 
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
         // Only runs on the server
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-            // When a player right-click something.
-            if (event.action == Action.RIGHT_CLICK_BLOCK) {
+        if (WorldHelper.isServer(event.world)) {
+            // When a player shift and right-clicks a block.
+            if (event.action == Action.RIGHT_CLICK_BLOCK && PlayerHelper.isPlayerSneaking(event.entityPlayer)) {
                 // Get what the player used and what he or she clicked.
                 ItemStack usedItem = event.entityPlayer.getCurrentEquippedItem();
                 Block targetBlock = event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z);
                 int targetMeta = event.entityPlayer.worldObj.getBlockMetadata(event.x, event.y, event.z);
                 // Check if the player right-clicked with a map in hand.
                 // Process only valid blocks
-                if (usedItem != null && usedItem.getItem() instanceof ItemMap) {
+                if (usedItem != null && usedItem.getItem() instanceof ItemMap && targetBlock != null && targetMeta > -1) {
                     // Defines the custom icon based on the block clicked
                     byte targetIcon = -1;
 
@@ -51,49 +57,42 @@ public class PlayerEventHandler {
                     }
 
                     // --- Mob Spawner
-                    else if (targetBlock == Blocks.mob_spawner) {
+                    if (targetBlock == Blocks.mob_spawner) {
                         targetIcon = 40;
                     }
-
                     // --- Beacon
-                    else if (targetBlock == Blocks.beacon) {
+                    if (targetBlock == Blocks.beacon) {
                         targetIcon = 41;
                     }
-
                     // --- Chest, Trapped Chest, Ender Chest
-                    else if (targetBlock == Blocks.chest || targetBlock == Blocks.trapped_chest || targetBlock == Blocks.ender_chest) {
+                    if (targetBlock == Blocks.chest | targetBlock == Blocks.trapped_chest | targetBlock == Blocks.ender_chest) {
                         targetIcon = 42;
                     }
-
                     // --- Nether Portal
-                    else if (targetBlock == Blocks.portal) {
+                    if (targetBlock == Blocks.portal) {
                         targetIcon = 43;
                     }
-
                     // --- End Portal
-                    else if (targetBlock == Blocks.end_portal || targetBlock == Blocks.end_portal_frame) {
+                    if (targetBlock == Blocks.end_portal || targetBlock == Blocks.end_portal_frame) {
                         targetIcon = 44;
                     }
-
                     // --- Brewing Stand
-                    else if (targetBlock == Blocks.brewing_stand) {
+                    if (targetBlock == Blocks.brewing_stand) {
                         targetIcon = 45;
                     }
-
                     // --- Enchantment Table, Bookshelf
-                    else if (targetBlock == Blocks.enchanting_table || targetBlock == Blocks.bookshelf) {
+                    if (targetBlock == Blocks.enchanting_table || targetBlock == Blocks.bookshelf) {
                         targetIcon = 46;
                     }
-
                     // --- Note Block, Jukebox
-                    else if (targetBlock == Blocks.noteblock || targetBlock == Blocks.jukebox) {
+                    if (targetBlock == Blocks.noteblock || targetBlock == Blocks.jukebox) {
                         targetIcon = 47;
                     }
-
                     // --- Anvil
-                    else if (targetBlock == Blocks.anvil) {
+                    if (targetBlock == Blocks.anvil) {
                         targetIcon = 52;
                     }
+
                     if (targetIcon > -1) {
                         MapData mapdata = ((ItemMap)usedItem.getItem()).getMapData(usedItem, event.entityPlayer.worldObj);
 //                        mapdata.addCustomIcon(targetIcon, event.x, event.z);
@@ -103,6 +102,5 @@ public class PlayerEventHandler {
             }
         }
     }
-
 
 }

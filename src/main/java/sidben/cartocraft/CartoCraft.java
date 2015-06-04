@@ -5,7 +5,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
-import sidben.cartocraft.client.PlayerEventHandler;
+import sidben.cartocraft.common.PlayerEventHandler;
 
 @Mod(modid = CartoCraft.CARTO_CRAFT_MOD_ID, name = CartoCraft.CARTO_CRAFT_NAME, version = CartoCraft.CARTO_CRAFT_VERSION)
 public class CartoCraft {
@@ -18,8 +18,7 @@ public class CartoCraft {
     @EventHandler
     public void load(FMLInitializationEvent event) {
         // Register my custom player event handler
-        PlayerEventHandler playerEventHandler = new PlayerEventHandler();
-        MinecraftForge.EVENT_BUS.register(playerEventHandler);
+        MinecraftForge.EVENT_BUS.register(PlayerEventHandler.INSTANCE);
     }
 
 }

@@ -45,7 +45,7 @@ processResources {
 
 jar {
     manifest {
-        attributes 'FMLCorePlugin': 'sidben.cartocraft.asm.CartoCraftAsm'
+        attributes 'FMLCorePlugin': 'sidben.cartocraft.asm.CartoAsm'
         attributes 'Created-By': 'Master801'
     }
 }
