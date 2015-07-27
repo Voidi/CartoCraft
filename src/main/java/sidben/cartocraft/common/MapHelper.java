@@ -20,7 +20,7 @@ public final class MapHelper {
         final String methodName = "addCustomIcon";
         Method addCustomIconMethod = ReflectionHelper.getMethod(MapData.class, methodName, ReflectionHelper.createNewClassParameter(byte.class, int.class, int.class), true);
         if (addCustomIconMethod == null) {
-            CartoCraft.CARTO_CRAFT_LOGGER.error(String.format("Failed to get method \"%s\" in class \"%s\"|\"(MapData)\"! Did the Asm injections fail?", methodName, MapData.class.getCanonicalName()));
+            CartoCraft.CARTO_CRAFT_LOGGER.error("Failed to get method \"{}\" in class \"{}\"|\"(net/minecraft/world/storage/MapData)\"! Did the Asm injections fail?", methodName, MapData.class.getCanonicalName().replace('.', '/'));
             return;
         }
         ReflectionHelper.invokeMethod(addCustomIconMethod, mapData, ReflectionHelper.createNewObjectParameter(customIcon, xCoord, zCoord));
