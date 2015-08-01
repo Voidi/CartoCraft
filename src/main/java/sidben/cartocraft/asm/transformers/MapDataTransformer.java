@@ -65,7 +65,7 @@ public final class MapDataTransformer extends SubstituteTransformerCoreBase<Inte
         public MapData instance = null;
 
         @SubstituteField
-        private ArrayList<MapCoord> mapCoords = null;
+        public ArrayList<MapCoord> mapCoords = null;
 
         @SubstituteField
         private boolean sentPacket = false;
