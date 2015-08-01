@@ -28,7 +28,7 @@ import java.util.Map;
  * Created by Master801 on 6/4/2015 at 9:32 AM.
  * @author Master801
  */
-public final class MapDataTransformer extends SubstituteTransformerCoreBase<Class<InternalSubstituteClass>> {
+public final class MapDataTransformer extends SubstituteTransformerCoreBase<InternalSubstituteClass> {
 
     public MapDataTransformer() {
         setLogger(LogManager.getLogger("Carto-Asm"));
